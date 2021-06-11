@@ -1,4 +1,4 @@
-import * as Operations from './documents';
+import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -12,6 +12,8 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  Date: any;
+  DateTime: any;
 };
 
 export type CreateMessageInput = {
@@ -98,6 +100,14 @@ export type EscalateMutation = { __typename?: 'Mutation' } & {
   escalate?: Maybe<{ __typename?: 'Message' } & Pick<Message, 'id'>>;
 };
 
+export const GetMessagesDocument = gql`
+  query GetMessages($tab: String!) {
+    messages(tab: $tab) {
+      id
+    }
+  }
+`;
+
 /**
  * __useGetMessagesQuery__
  *
@@ -116,17 +126,25 @@ export type EscalateMutation = { __typename?: 'Mutation' } & {
  */
 export function useGetMessagesQuery(baseOptions: Apollo.QueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetMessagesQuery, GetMessagesQueryVariables>(Operations.GetMessages, options);
+  return Apollo.useQuery<GetMessagesQuery, GetMessagesQueryVariables>(GetMessagesDocument, options);
 }
 export function useGetMessagesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<GetMessagesQuery, GetMessagesQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetMessagesQuery, GetMessagesQueryVariables>(Operations.GetMessages, options);
+  return Apollo.useLazyQuery<GetMessagesQuery, GetMessagesQueryVariables>(GetMessagesDocument, options);
 }
 export type GetMessagesQueryHookResult = ReturnType<typeof useGetMessagesQuery>;
 export type GetMessagesLazyQueryHookResult = ReturnType<typeof useGetMessagesLazyQuery>;
 export type GetMessagesQueryResult = Apollo.QueryResult<GetMessagesQuery, GetMessagesQueryVariables>;
+export const CreateMessageDocument = gql`
+  mutation CreateMessage($args: CreateMessageInput!) {
+    createMessage(args: $args) {
+      id
+    }
+  }
+`;
+export type CreateMessageMutationFn = Apollo.MutationFunction<CreateMessageMutation, CreateMessageMutationVariables>;
 
 /**
  * __useCreateMessageMutation__
@@ -149,7 +167,7 @@ export function useCreateMessageMutation(
   baseOptions?: Apollo.MutationHookOptions<CreateMessageMutation, CreateMessageMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateMessageMutation, CreateMessageMutationVariables>(Operations.CreateMessage, options);
+  return Apollo.useMutation<CreateMessageMutation, CreateMessageMutationVariables>(CreateMessageDocument, options);
 }
 export type CreateMessageMutationHookResult = ReturnType<typeof useCreateMessageMutation>;
 export type CreateMessageMutationResult = Apollo.MutationResult<CreateMessageMutation>;
@@ -157,6 +175,14 @@ export type CreateMessageMutationOptions = Apollo.BaseMutationOptions<
   CreateMessageMutation,
   CreateMessageMutationVariables
 >;
+export const DeclineDocument = gql`
+  mutation Decline($id: ID!, $reason: String!) {
+    decline(id: $id, reason: $reason) {
+      id
+    }
+  }
+`;
+export type DeclineMutationFn = Apollo.MutationFunction<DeclineMutation, DeclineMutationVariables>;
 
 /**
  * __useDeclineMutation__
@@ -180,11 +206,19 @@ export function useDeclineMutation(
   baseOptions?: Apollo.MutationHookOptions<DeclineMutation, DeclineMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<DeclineMutation, DeclineMutationVariables>(Operations.Decline, options);
+  return Apollo.useMutation<DeclineMutation, DeclineMutationVariables>(DeclineDocument, options);
 }
 export type DeclineMutationHookResult = ReturnType<typeof useDeclineMutation>;
 export type DeclineMutationResult = Apollo.MutationResult<DeclineMutation>;
 export type DeclineMutationOptions = Apollo.BaseMutationOptions<DeclineMutation, DeclineMutationVariables>;
+export const ApproveDocument = gql`
+  mutation Approve($id: ID!) {
+    approve(id: $id) {
+      id
+    }
+  }
+`;
+export type ApproveMutationFn = Apollo.MutationFunction<ApproveMutation, ApproveMutationVariables>;
 
 /**
  * __useApproveMutation__
@@ -207,11 +241,19 @@ export function useApproveMutation(
   baseOptions?: Apollo.MutationHookOptions<ApproveMutation, ApproveMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<ApproveMutation, ApproveMutationVariables>(Operations.Approve, options);
+  return Apollo.useMutation<ApproveMutation, ApproveMutationVariables>(ApproveDocument, options);
 }
 export type ApproveMutationHookResult = ReturnType<typeof useApproveMutation>;
 export type ApproveMutationResult = Apollo.MutationResult<ApproveMutation>;
 export type ApproveMutationOptions = Apollo.BaseMutationOptions<ApproveMutation, ApproveMutationVariables>;
+export const EscalateDocument = gql`
+  mutation Escalate($id: ID!) {
+    escalate(id: $id) {
+      id
+    }
+  }
+`;
+export type EscalateMutationFn = Apollo.MutationFunction<EscalateMutation, EscalateMutationVariables>;
 
 /**
  * __useEscalateMutation__
@@ -234,7 +276,7 @@ export function useEscalateMutation(
   baseOptions?: Apollo.MutationHookOptions<EscalateMutation, EscalateMutationVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<EscalateMutation, EscalateMutationVariables>(Operations.Escalate, options);
+  return Apollo.useMutation<EscalateMutation, EscalateMutationVariables>(EscalateDocument, options);
 }
 export type EscalateMutationHookResult = ReturnType<typeof useEscalateMutation>;
 export type EscalateMutationResult = Apollo.MutationResult<EscalateMutation>;

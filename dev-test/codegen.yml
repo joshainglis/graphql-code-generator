@@ -7,16 +7,19 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
-  ./dev-test/test-schema/flow-types.flow.js:
-    schema: ./dev-test/test-schema/schema.json
+  ./dev-test/test-schema/resolvers-types.py:
+    schema: ./dev-test/test-schema/schema-text.js
     plugins:
-      - flow
-      - flow-resolvers
+      - pydantic
   ./dev-test/test-schema/resolvers-root.ts:
     schema: ./dev-test/test-schema/schema-with-root.graphql
     plugins:
       - typescript
       - typescript-resolvers
+  ./dev-test/test-schema/resolvers-root.py:
+    schema: ./dev-test/test-schema/schema-with-root.graphql
+    plugins:
+      - pydantic
   ./dev-test/test-schema/resolvers-federation.ts:
     schema: ./dev-test/test-schema/schema-federation.graphql
     config:
@@ -24,6 +27,12 @@ generates:
     plugins:
       - typescript
       - typescript-resolvers
+  ./dev-test/test-schema/resolvers-federation.py:
+    schema: ./dev-test/test-schema/schema-federation.graphql
+    config:
+      federation: true
+    plugins:
+      - pydantic
   ./dev-test/test-schema/typings.ts:
     schema: ./dev-test/test-schema/schema.json
     plugins:
@@ -59,6 +68,10 @@ generates:
     schema: ./dev-test/test-schema/schema-object.js
     plugins:
       - typescript
+  ./dev-test/test-schema/typings-enum.py:
+    schema: ./dev-test/test-schema/schema-object.js
+    plugins:
+      - pydantic
   ./dev-test/githunt/graphql-declared-modules.d.ts:
     schema: ./dev-test/githunt/schema.json
     documents: ./dev-test/githunt/**/*.graphql
@@ -366,10 +379,12 @@ generates:
       - typescript
       - typescript-operations
       - typescript-react-apollo
+  ./dev-test/test-message/types.py:
+    schema: ./dev-test/test-message/schema.graphql
+    documents: ./dev-test/test-message/documents.ts
+    plugins:
+      - pydantic
     config:
-      documentMode: external
-      importDocumentNodeExternallyFrom: './documents.ts'
-      reactApolloVersion: 3
-      gqlImport: graphql-tag
-      hooksImportFrom: '@apollo/react-hooks'
-      withMutationFn: false
+      scalars:
+        Date: 'datetime#date'
+        DateTime: 'datetime#datetime'
